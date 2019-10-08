@@ -51,7 +51,7 @@ type Options = {
    * This usually gets constructed by the middleware, but it's possible
    * to provide your own.
    */
-  oauth2: OAuth2,
+  oauth2?: OAuth2,
 };
 
 type IntrospectionResult = {
@@ -78,15 +78,11 @@ export default function(options: Options): Middleware {
   return async (ctx, next) => {
 
     // Lets first check the whitelist.
-    if (options.whitelist) {
-
-      for (const whiteItem of options.whitelist) {
-        if (ctx.path === whiteItem || ctx.path.startsWith(whiteItem + '/')) {
-          // It was in the whitelist
-          return next();
-        }
+    for (const whiteItem of options.whitelist) {
+      if (ctx.path === whiteItem || ctx.path.startsWith(whiteItem + '/')) {
+        // It was in the whitelist
+        return next();
       }
-
     }
 
     if (!ctx.request.headers.has('Authorization')) {
@@ -94,7 +90,7 @@ export default function(options: Options): Middleware {
     }
 
     const authParts = ctx.request.headers.get('Authorization')!.split(' ');
-    if (authParts[0].length !== 2 || authParts[0].toLowerCase() !== 'bearer') {
+    if (authParts.length !== 2 || authParts[0].toLowerCase() !== 'bearer') {
       throw new Unauthorized('Unsupported authentication method', 'Bearer');
     }
 
