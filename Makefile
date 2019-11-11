@@ -9,7 +9,8 @@ build: dist/build
 
 .PHONY:test
 test:
-	nyc mocha
+	nyc  mocha
+	nyc report --reporter=json
 
 .PHONY:lint
 lint:
