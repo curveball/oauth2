@@ -1,6 +1,6 @@
 {
   "name": "@curveball/oauth2",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Authentication middleware. Requires clients to provide correct Bearer tokens.",
   "main": "dist/index.js",
   "scripts": {
