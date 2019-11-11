@@ -4,6 +4,12 @@ import { OAuth2, OAuth2Options } from 'fetch-mw-oauth2';
 import fetch from 'node-fetch';
 import qs from 'querystring';
 
+// Registering Fetch as a glboal polyfill
+(<any> global).fetch = fetch;
+(<any> global).Request = Request;
+(<any> global).Headers = Headers;
+(<any> global).Response = Response;
+
 type Options = {
 
   /**
