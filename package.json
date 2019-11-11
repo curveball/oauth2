@@ -1,6 +1,6 @@
 {
   "name": "@curveball/oauth2",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OAuth2 Middleware that validates Bearer tokens against a OAuth2 Introspection Endpoint.",
   "main": "dist/index.js",
   "scripts": {
