@@ -39,7 +39,7 @@ app.use(oauth2({
     '/register'
   ],
   introspectionEndpoint: 'https://my-oauth2-server.example.org/introspect',
-});
+}));
 ```
 
 It might be needed for your Curveball resource server to also authenticate
@@ -69,7 +69,7 @@ app.use(oauth2({
     clientId: 'my-server-client-id',
     clientSecret: 'my-server-client-secret',
   },
-});
+}));
 ```
 
 This OAuth2 middleware supports `client_credentials`, `password` and others.
