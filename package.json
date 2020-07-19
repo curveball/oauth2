@@ -66,5 +66,14 @@
   },
   "peerDependencies": {
     "@curveball/core": ">=0.9 <1"
+  },
+  "mocha": {
+    "require": "ts-node/register",
+    "recursive": true,
+    "extension": [
+      "ts",
+      "js",
+      "tsx"
+    ]
   }
 }

@@ -1,7 +1,7 @@
 Curveball OAuth2 Middleware
 ===========================
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/curveballjs/oauth2.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/curveball/oauth2.svg)](https://greenkeeper.io/)
 
 
 This middleware can be added to a server to automatically validate OAuth2
