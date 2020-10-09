@@ -3,6 +3,8 @@ import { Unauthorized } from '@curveball/http-errors';
 import { OAuth2, OAuth2Options } from 'fetch-mw-oauth2';
 import { default as fetch, Headers, Request, Response } from 'node-fetch';
 import qs from 'querystring';
+// @ts-ignore: Ignore not having this definition for now
+import { pathToRegexp } from 'path-to-regexp';
 
 // Registering Fetch as a glboal polyfill
 (<any> global).fetch = fetch;
@@ -85,7 +87,10 @@ export default function(options: Options): Middleware {
 
     // Lets first check the whitelist.
     for (const whiteItem of options.whitelist) {
-      if (ctx.path === whiteItem || ctx.path.startsWith(whiteItem + '/')) {
+      const basePattern = pathToRegexp(whiteItem);
+      const subPattern = pathToRegexp(whiteItem + '/', [], { end: false });
+
+      if (basePattern.test(ctx.path) || subPattern.test(ctx.path)) {
         // It was in the whitelist
         return next();
       }
