@@ -10,7 +10,7 @@ import { OAuth2Options } from 'fetch-mw-oauth2';
 
 describe('OAuth2 middleware', () => {
 
-  startServer();
+  const server = startServer();
 
   it('should instantiate', () => {
 
@@ -81,6 +81,12 @@ describe('OAuth2 middleware', () => {
   });
 
 
+  after(() => {
+
+    server.close();
+
+  });
+
 });
 
 
@@ -122,7 +128,7 @@ async function expectStatus(status: number, app: Application, path: string, auth
 
 function startServer() {
 
-  http.createServer((req, res) => {
+  return http.createServer((req, res) => {
     let body = '';
     req.on('data', chunk => {
       body += chunk.toString(); // convert Buffer to string
