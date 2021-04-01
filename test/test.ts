@@ -3,12 +3,14 @@ import { expect } from 'chai';
 import { Application, Context } from '@curveball/core';
 import * as http from 'http';
 import { OAuth2Options } from 'fetch-mw-oauth2';
-(<any> global).fetch = require('node-fetch');;
+
+/* eslint-disable @typescript-eslint/no-var-requires */
+(<any> global).fetch = require('node-fetch');
 (<any> global).Request = require('node-fetch').Request;
 
 describe('OAuth2 middleware', () => {
 
-  startServer();
+  const server = startServer();
 
   it('should instantiate', () => {
 
@@ -78,29 +80,10 @@ describe('OAuth2 middleware', () => {
 
   });
 
-  it('should pass a Bearer token identifying the server when relevant options were passed', async () => {
 
-    const app = getApp({
-      clientId: 'fancy-server',
-      grantType: undefined,
-      accessToken: 'server-bearer',
-      refreshToken: '/',
-      tokenEndpoint: '/',
-    });
-    await expectStatus(200, app, '/', 'Bearer correct');
+  after(() => {
 
-  });
-
-  it('shoul fail when the resource-server bearer token was incorrect', async () => {
-
-    const app = getApp({
-      clientId: 'fancy-server',
-      grantType: undefined,
-      accessToken: 'server-bearer-bad',
-      refreshToken: '/',
-      tokenEndpoint: '/',
-    });
-    await expectStatus(500, app, '/', 'Bearer correct');
+    server.close();
 
   });
 
@@ -138,7 +121,6 @@ async function expectStatus(status: number, app: Application, path: string, auth
   if (authString) {
     headers.Authorization = authString;
   }
-  console.log(headers);
   const response = await app.subRequest('GET', path, headers);
   expect(response.status).to.equal(status);
 
@@ -146,13 +128,12 @@ async function expectStatus(status: number, app: Application, path: string, auth
 
 function startServer() {
 
-  http.createServer((req, res) => {
+  return http.createServer((req, res) => {
     let body = '';
     req.on('data', chunk => {
-        body += chunk.toString(); // convert Buffer to string
+      body += chunk.toString(); // convert Buffer to string
     });
     req.on('end', () => {
-      console.log(body);
 
       let result;
 
@@ -162,13 +143,12 @@ function startServer() {
         return;
       }
 
-      console.log(req.headers.Authorization);
 
       switch(body) {
         case 'token=correct&token_type_hint=access_token':
           result = {
             active: true
-          }
+          };
           break;
         case 'token=error&token_type_hint=access_token' :
           result = {};

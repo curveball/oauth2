@@ -2,7 +2,7 @@ import { Middleware } from '@curveball/core';
 import { Unauthorized } from '@curveball/http-errors';
 import { OAuth2, OAuth2Options } from 'fetch-mw-oauth2';
 import { default as fetch, Headers, Request, Response } from 'node-fetch';
-import qs from 'querystring';
+import * as qs from 'querystring';
 
 // Registering Fetch as a glboal polyfill
 (<any> global).fetch = fetch;
@@ -135,7 +135,7 @@ async function introspect(options: Options, bearerToken: string): Promise<Intros
   }
 
   if (!response.ok) {
-    // tslint:disable no-console
+    /* eslint-disable no-console */
     console.error('Error while trying to contact OAuth2 introspection server. Code: ' + response.status);
     console.error(await response.text());
     throw new Error('Error while trying to contact OAuth2 introspection server. Code: ' + response.status + '. See log for more information');
