@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { Application, Context } from '@curveball/core';
 import * as http from 'http';
 import { OAuth2Options } from 'fetch-mw-oauth2';
+
+/* eslint-disable @typescript-eslint/no-var-requires */
 (<any> global).fetch = require('node-fetch');
 (<any> global).Request = require('node-fetch').Request;
 
@@ -138,7 +140,6 @@ async function expectStatus(status: number, app: Application, path: string, auth
   if (authString) {
     headers.Authorization = authString;
   }
-  console.log(headers);
   const response = await app.subRequest('GET', path, headers);
   expect(response.status).to.equal(status);
 
@@ -152,7 +153,6 @@ function startServer() {
       body += chunk.toString(); // convert Buffer to string
     });
     req.on('end', () => {
-      console.log(body);
 
       let result;
 
@@ -162,7 +162,6 @@ function startServer() {
         return;
       }
 
-      console.log(req.headers.Authorization);
 
       switch(body) {
         case 'token=correct&token_type_hint=access_token':

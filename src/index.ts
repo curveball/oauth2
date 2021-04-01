@@ -135,7 +135,7 @@ async function introspect(options: Options, bearerToken: string): Promise<Intros
   }
 
   if (!response.ok) {
-    // tslint:disable no-console
+    /* eslint-disable no-console */
     console.error('Error while trying to contact OAuth2 introspection server. Code: ' + response.status);
     console.error(await response.text());
     throw new Error('Error while trying to contact OAuth2 introspection server. Code: ' + response.status + '. See log for more information');
