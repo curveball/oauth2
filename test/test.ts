@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Application, Context } from '@curveball/core';
 import * as http from 'http';
 import { OAuth2Options } from 'fetch-mw-oauth2';
-(<any> global).fetch = require('node-fetch');;
+(<any> global).fetch = require('node-fetch');
 (<any> global).Request = require('node-fetch').Request;
 
 describe('OAuth2 middleware', () => {
@@ -149,7 +149,7 @@ function startServer() {
   http.createServer((req, res) => {
     let body = '';
     req.on('data', chunk => {
-        body += chunk.toString(); // convert Buffer to string
+      body += chunk.toString(); // convert Buffer to string
     });
     req.on('end', () => {
       console.log(body);
@@ -168,7 +168,7 @@ function startServer() {
         case 'token=correct&token_type_hint=access_token':
           result = {
             active: true
-          }
+          };
           break;
         case 'token=error&token_type_hint=access_token' :
           result = {};
