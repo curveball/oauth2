@@ -2,7 +2,7 @@ import { Middleware } from '@curveball/core';
 import { Unauthorized } from '@curveball/http-errors';
 import { OAuth2, OAuth2Options } from 'fetch-mw-oauth2';
 import { default as fetch, Headers, Request, Response } from 'node-fetch';
-import qs from 'querystring';
+import * as qs from 'querystring';
 
 // Registering Fetch as a glboal polyfill
 (<any> global).fetch = fetch;

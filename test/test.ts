@@ -80,31 +80,6 @@ describe('OAuth2 middleware', () => {
 
   });
 
-  it('should pass a Bearer token identifying the server when relevant options were passed', async () => {
-
-    const app = getApp({
-      clientId: 'fancy-server',
-      grantType: undefined,
-      accessToken: 'server-bearer',
-      refreshToken: '/',
-      tokenEndpoint: '/',
-    });
-    await expectStatus(200, app, '/', 'Bearer correct');
-
-  });
-
-  it('shoul fail when the resource-server bearer token was incorrect', async () => {
-
-    const app = getApp({
-      clientId: 'fancy-server',
-      grantType: undefined,
-      accessToken: 'server-bearer-bad',
-      refreshToken: '/',
-      tokenEndpoint: '/',
-    });
-    await expectStatus(500, app, '/', 'Bearer correct');
-
-  });
 
 });
 
