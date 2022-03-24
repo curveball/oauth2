@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.2.1 (2022-03-24)
+------------------
+
+* Bring package fully up to date with coding standards and dependencies.
+
+
 0.2.0 (2021-04-01)
 ------------------
 

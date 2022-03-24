@@ -5,10 +5,10 @@ import { default as fetch, Headers, Request, Response } from 'node-fetch';
 import * as qs from 'querystring';
 
 // Registering Fetch as a glboal polyfill
-(<any> global).fetch = fetch;
-(<any> global).Request = Request;
-(<any> global).Headers = Headers;
-(<any> global).Response = Response;
+(global as any).fetch = fetch;
+(global as any).Request = Request;
+(global as any).Headers = Headers;
+(global as any).Response = Response;
 
 type Options = {
 
@@ -20,7 +20,7 @@ type Options = {
    *
    * See: https://tools.ietf.org/html/rfc7662
    */
-  introspectionEndpoint: string,
+  introspectionEndpoint: string;
 
   /**
    * If it's required for _this_ server to authenticate to the OAuth2
@@ -33,7 +33,7 @@ type Options = {
    * 1. A bearer token that is being validated.
    * 2. A bearer token that identifies this resource server.
    */
-  oauth2Settings?: OAuth2Options,
+  oauth2Settings?: OAuth2Options;
 
   /**
    * A list of paths that will not be checked for authentication.
@@ -49,7 +49,7 @@ type Options = {
    * /register/foo
    * /register/foo/bar
    */
-  whitelist: string[],
+  whitelist: string[];
 
   /**
    * If specified, this is a fully initialized oauth2-fetch-mw object.
@@ -57,22 +57,22 @@ type Options = {
    * This usually gets constructed by the middleware, but it's possible
    * to provide your own.
    */
-  oauth2?: OAuth2,
+  oauth2?: OAuth2;
 };
 
 type IntrospectionResult = {
-  active: boolean,
-  scope?: string,
-  client_id?: string,
-  username?: string,
-  exp?: number,
-  iat?: number,
-  nbf?: number,
-  sub?: string,
-  aud?: string | string[],
-  iss?: string,
-  jti?: string,
-  [key: string]: any,
+  active: boolean;
+  scope?: string;
+  client_id?: string;
+  username?: string;
+  exp?: number;
+  iat?: number;
+  nbf?: number;
+  sub?: string;
+  aud?: string | string[];
+  iss?: string;
+  jti?: string;
+  [key: string]: any;
 };
 
 export default function(options: Options): Middleware {

@@ -5,8 +5,8 @@ import * as http from 'http';
 import { OAuth2Options } from 'fetch-mw-oauth2';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
-(<any> global).fetch = require('node-fetch');
-(<any> global).Request = require('node-fetch').Request;
+(global as any).fetch = require('node-fetch');
+(global as any).Request = require('node-fetch').Request;
 
 describe('OAuth2 middleware', () => {
 
