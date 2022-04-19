@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@curveball/http-errors": "^0.4.0",
-    "fetch-mw-oauth2": "^2.0.0"
+    "fetch-mw-oauth2": "^2.0.1"
   },
   "peerDependencies": {
     "@curveball/core": ">=0.16 <1"
