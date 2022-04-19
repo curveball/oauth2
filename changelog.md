@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.3.0 (2022-??-??)
+------------------
+
+* Now uses the new `fetch-mw-oauth2` package.
+* Requires Node 18, *unless* the user provides their own `fetch` polyfill.
+* BC break. Take a look at the README to figure out how to set up this
+  middleware.
+
+
 0.2.1 (2022-03-24)
 ------------------
 
