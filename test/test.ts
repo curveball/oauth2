@@ -2,11 +2,7 @@ import OAuth2Mw from '../src';
 import { expect } from 'chai';
 import { Application, Context } from '@curveball/core';
 import * as http from 'http';
-import { OAuth2Options } from 'fetch-mw-oauth2';
-
-/* eslint-disable @typescript-eslint/no-var-requires */
-(global as any).fetch = require('node-fetch');
-(global as any).Request = require('node-fetch').Request;
+import { OAuth2Client } from 'fetch-mw-oauth2';
 
 describe('OAuth2 middleware', () => {
 
@@ -15,7 +11,10 @@ describe('OAuth2 middleware', () => {
   it('should instantiate', () => {
 
     const options = {
-      introspectionEndpoint: 'http://localhost:40666/introspect',
+      client: new OAuth2Client({
+        clientId: 'foo',
+        introspectionEndpoint: 'http://localhost:40666/introspect',
+      }),
       whitelist: [],
     };
 
@@ -91,14 +90,16 @@ describe('OAuth2 middleware', () => {
 
 
 
-function getApp(oauth2Settings?: OAuth2Options) {
+function getApp() {
 
   const app = new Application();
 
   const options = {
-    introspectionEndpoint: 'http://localhost:40666/introspect',
+    client: new OAuth2Client({
+      clientId: 'foo',
+      introspectionEndpoint: 'http://localhost:40666/introspect',
+    }),
     whitelist: ['/whitelist'],
-    oauth2Settings,
   };
 
   const oauth2mw = OAuth2Mw(options);
