@@ -79,6 +79,15 @@ describe('OAuth2 middleware', () => {
 
   });
 
+  it('should all work even with the introspection path', async () => {
+
+    const app = getApp(new OAuth2Client({
+      clientId: 'foo',
+      server: 'http://localhost:40666/',
+    }));
+    await expectStatus(200, app, '/', 'Bearer correct');
+
+  });
 
   after(() => {
 
@@ -90,12 +99,12 @@ describe('OAuth2 middleware', () => {
 
 
 
-function getApp() {
+function getApp(client?: OAuth2Client) {
 
   const app = new Application();
 
   const options = {
-    client: new OAuth2Client({
+    client: client ?? new OAuth2Client({
       clientId: 'foo',
       introspectionEndpoint: 'http://localhost:40666/introspect',
     }),
@@ -130,39 +139,51 @@ async function expectStatus(status: number, app: Application, path: string, auth
 function startServer() {
 
   return http.createServer((req, res) => {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString(); // convert Buffer to string
-    });
-    req.on('end', () => {
 
-      let result;
+    if (req.url === '/.well-known/oauth-authorization-server') {
+      res.end(JSON.stringify({
+        introspection_endpoint: '/introspect'
+      }));
+    } else if (req.url === '/introspect') {
 
-      if (req.headers.authorization === 'Bearer server-bearer-bad') {
-        res.statusCode = 401;
-        res.end();
-        return;
-      }
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString(); // convert Buffer to string
+      });
+      req.on('end', () => {
+
+        let result;
+
+        if (req.headers.authorization === 'Bearer server-bearer-bad') {
+          res.statusCode = 401;
+          res.end();
+          return;
+        }
 
 
-      switch(body) {
-        case 'token=correct&token_type_hint=access_token':
-          result = {
-            active: true
-          };
-          break;
-        case 'token=error&token_type_hint=access_token' :
-          result = {};
-          res.statusCode = 404;
-          break;
-        default:
-          result = {
-            active: false
-          };
-          break;
-      }
-      res.end(JSON.stringify(result));
-    });
+        switch(body) {
+          case 'token=correct&token_type_hint=access_token':
+            result = {
+              active: true
+            };
+            break;
+          case 'token=error&token_type_hint=access_token' :
+            result = {};
+            res.statusCode = 404;
+            break;
+          default:
+            result = {
+              active: false
+            };
+            break;
+        }
+        res.end(JSON.stringify(result));
+      });
+
+    } else {
+      res.statusCode = 404;
+      res.end('not found');
+    }
 
   }).listen(40666);
 
