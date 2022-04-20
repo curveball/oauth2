@@ -18,13 +18,14 @@ If the token was not valid, it will emit a 401 response.
 Installation
 ------------
 
-    npm install @curveball/oauth2
+    npm install @curveball/oauth2 fetch-mw-oauth2@2
 
 
 Getting started
 ---------------
 
-Simply add the middleware to an existing Curveball server:
+To use this middleware, you must first configure the oauth2 client and then
+add the middleware to your application.
 
 ```typescript
 import { Application } from '@curveball/core';
@@ -67,8 +68,6 @@ const client = OAuth2Client({
   server: 'https://my-oauth2-server.example.org/',
 });
 ```
-
-
 
 [1]: https://tools.ietf.org/html/rfc7662
 [2]: https://github.com/evert/fetch-mw-oauth2
