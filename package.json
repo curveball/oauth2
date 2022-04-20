@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublishOnly": "make build",
-    "test": "make lint test",
+    "test": "make test",
+    "lint": "make lint",
     "tsc": "tsc",
     "start": "make start"
   },
@@ -43,7 +44,6 @@
     "@types/chai": "^4.2.11",
     "@types/mocha": "^9.1.0",
     "@types/node": "^12.20.7",
-    "@types/node-fetch": "^2.5.5",
     "@types/sinon": "^10.0.11",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
@@ -63,8 +63,10 @@
   },
   "dependencies": {
     "@curveball/http-errors": "^0.4.0",
-    "fetch-mw-oauth2": "^1.0.0",
-    "node-fetch": "^2.6.0"
+    "fetch-mw-oauth2": "^2.0.1"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "peerDependencies": {
     "@curveball/core": ">=0.16 <1"

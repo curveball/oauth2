@@ -1,39 +1,16 @@
 import { Middleware } from '@curveball/core';
 import { Unauthorized } from '@curveball/http-errors';
-import { OAuth2, OAuth2Options } from 'fetch-mw-oauth2';
-import { default as fetch, Headers, Request, Response } from 'node-fetch';
-import * as qs from 'querystring';
-
-// Registering Fetch as a glboal polyfill
-(global as any).fetch = fetch;
-(global as any).Request = Request;
-(global as any).Headers = Headers;
-(global as any).Response = Response;
+import { OAuth2Client } from 'fetch-mw-oauth2';
 
 type Options = {
 
   /**
-   * OAuth2 Introspection endpoint.
+   * To initialize the library, pass an instance of the OAuth2 client.
    *
-   * This is the url to the OAuth2 introspection endpoint. This endpoint can
-   * give back information about access tokens, and whether they are valid.
-   *
-   * See: https://tools.ietf.org/html/rfc7662
+   * This client will be used to determine the instrospection endpoint, how
+   * to authenticate and more.
    */
-  introspectionEndpoint: string;
-
-  /**
-   * If it's required for _this_ server to authenticate to the OAuth2
-   * introspection endpoint, you can specify credentials here.
-   *
-   * Often it's needed to specify OAuth2 credentials to talk to an OAuth2
-   * endpoint.
-   *
-   * If this is the case, it might mean there are 2 Bearer tokens in play:
-   * 1. A bearer token that is being validated.
-   * 2. A bearer token that identifies this resource server.
-   */
-  oauth2Settings?: OAuth2Options;
+  client: OAuth2Client;
 
   /**
    * A list of paths that will not be checked for authentication.
@@ -51,35 +28,9 @@ type Options = {
    */
   whitelist: string[];
 
-  /**
-   * If specified, this is a fully initialized oauth2-fetch-mw object.
-   *
-   * This usually gets constructed by the middleware, but it's possible
-   * to provide your own.
-   */
-  oauth2?: OAuth2;
-};
-
-type IntrospectionResult = {
-  active: boolean;
-  scope?: string;
-  client_id?: string;
-  username?: string;
-  exp?: number;
-  iat?: number;
-  nbf?: number;
-  sub?: string;
-  aud?: string | string[];
-  iss?: string;
-  jti?: string;
-  [key: string]: any;
 };
 
 export default function(options: Options): Middleware {
-
-  if (options.oauth2Settings && !options.oauth2) {
-    options.oauth2 = new OAuth2(options.oauth2Settings);
-  }
 
   return async (ctx, next) => {
 
@@ -102,7 +53,12 @@ export default function(options: Options): Middleware {
 
     const bearerToken = authParts[1];
 
-    const introspectResult = await introspect(options, bearerToken);
+    const introspectResult = await options.client.introspect({
+      accessToken: bearerToken,
+      expiresAt: null,
+      refreshToken: null,
+    });
+
     if (!introspectResult.active) {
       throw new Unauthorized('Unrecognized or expired access token');
     }
@@ -111,35 +67,5 @@ export default function(options: Options): Middleware {
     return next();
 
   };
-
-}
-
-async function introspect(options: Options, bearerToken: string): Promise<IntrospectionResult> {
-
-  const parameters = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: qs.stringify({
-      token: bearerToken,
-      token_type_hint: 'access_token',
-    })
-  };
-
-  let response;
-  if (options.oauth2) {
-    response = await options.oauth2.fetch(options.introspectionEndpoint, parameters);
-  } else {
-    response = await fetch(options.introspectionEndpoint, parameters);
-  }
-
-  if (!response.ok) {
-    /* eslint-disable no-console */
-    console.error('Error while trying to contact OAuth2 introspection server. Code: ' + response.status);
-    console.error(await response.text());
-    throw new Error('Error while trying to contact OAuth2 introspection server. Code: ' + response.status + '. See log for more information');
-  }
-  return await response.json();
 
 }
