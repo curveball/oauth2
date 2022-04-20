@@ -58,6 +58,7 @@ export default function(options: Options): Middleware {
       expiresAt: null,
       refreshToken: null,
     });
+
     if (!introspectResult.active) {
       throw new Unauthorized('Unrecognized or expired access token');
     }
