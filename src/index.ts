@@ -26,10 +26,10 @@ type Options = {
    * /register/foo
    * /register/foo/bar
    */
-  excludeList?: string[];
+  publicPrefixes?: string[];
 
   /**
-   * @deprecated use excludeList instead
+   * @deprecated use publicPrefixes instead
    */
   whitelist?: string[];
 
@@ -37,16 +37,16 @@ type Options = {
 
 export default function(options: Options): Middleware {
 
-  const excludeList = options.excludeList ?? options.whitelist ?? [];
+  const publicPrefixes = options.publicPrefixes ?? options.whitelist ?? [];
 
   return async (ctx, next) => {
 
     let authRequired = true;
 
-    // Lets first check the excludeList
-    for (const whiteItem of excludeList) {
-      if (ctx.path === whiteItem || ctx.path.startsWith(whiteItem + '/')) {
-        // If the current URL is in the excludeList, authentication is optional.
+    // Lets first check the publicPrefixes
+    for (const prefix of publicPrefixes) {
+      if (ctx.path === prefix || ctx.path.startsWith(prefix + '/')) {
+        // If the current URL is in the publicPrefixes, authentication is optional.
         authRequired = false;
         break;
       }

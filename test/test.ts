@@ -107,7 +107,7 @@ function getApp(client?: OAuth2Client) {
       clientId: 'foo',
       introspectionEndpoint: 'http://localhost:40666/introspect',
     }),
-    excludeList: ['/public'],
+    publicPrefixes: ['/public'],
   };
 
   const oauth2mw = OAuth2Mw(options);
