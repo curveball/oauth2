@@ -26,43 +26,65 @@ type Options = {
    * /register/foo
    * /register/foo/bar
    */
-  whitelist: string[];
+  publicPrefixes?: string[];
+
+  /**
+   * @deprecated use publicPrefixes instead
+   */
+  whitelist?: string[];
 
 };
 
 export default function(options: Options): Middleware {
 
+  const publicPrefixes = options.publicPrefixes ?? options.whitelist ?? [];
+
+  if (options.whitelist) {
+    console.warn('[@curveball/oauth2] The "whitelist" option is deprecated. Use "publicPrefixes" instead.');
+  }
+
   return async (ctx, next) => {
 
-    // Lets first check the whitelist.
-    for (const whiteItem of options.whitelist) {
-      if (ctx.path === whiteItem || ctx.path.startsWith(whiteItem + '/')) {
-        // It was in the whitelist
-        return next();
+    let authRequired = true;
+
+    // Lets first check the publicPrefixes
+    for (const prefix of publicPrefixes) {
+      if (ctx.path === prefix || ctx.path.startsWith(prefix + '/')) {
+        // If the current URL is in the publicPrefixes, authentication is optional.
+        authRequired = false;
+        break;
       }
+
     }
 
-    if (!ctx.request.headers.has('Authorization')) {
-      throw new Unauthorized('A valid Bearer token is required to access this endpoint', 'Bearer');
+    let introspectResult: null | Awaited<ReturnType<typeof options.client.introspect>> = null;
+
+    const authHeader = ctx.request.headers.get('Authorization');
+    if (!authHeader) {
+      if (authRequired) throw new Unauthorized('A valid Bearer token is required to access this endpoint', 'Bearer');
+    } else {
+      const authParts = authHeader.split(' ');
+      if (authParts.length !== 2 || authParts[0].toLowerCase() !== 'bearer') {
+        if (authRequired) throw new Unauthorized('Unsupported authentication method', 'Bearer');
+      } else {
+
+        const bearerToken = authParts[1];
+        introspectResult = await options.client.introspect({
+          accessToken: bearerToken,
+          expiresAt: null,
+          refreshToken: null,
+        });
+
+      }
+
     }
 
-    const authParts = ctx.request.headers.get('Authorization')!.split(' ');
-    if (authParts.length !== 2 || authParts[0].toLowerCase() !== 'bearer') {
-      throw new Unauthorized('Unsupported authentication method', 'Bearer');
+    if (introspectResult) {
+      if (!introspectResult.active) {
+        throw new Unauthorized('Unrecognized or expired access token');
+      }
+      ctx.state.oauth2 = introspectResult;
     }
-
-    const bearerToken = authParts[1];
-
-    const introspectResult = await options.client.introspect({
-      accessToken: bearerToken,
-      expiresAt: null,
-      refreshToken: null,
-    });
-
-    if (!introspectResult.active) {
-      throw new Unauthorized('Unrecognized or expired access token');
-    }
-    ctx.state.oauth2 = introspectResult;
 
     return next();
 

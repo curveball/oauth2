@@ -15,7 +15,6 @@ describe('OAuth2 middleware', () => {
         clientId: 'foo',
         introspectionEndpoint: 'http://localhost:40666/introspect',
       }),
-      whitelist: [],
     };
 
     const oauth2mw = OAuth2Mw(options);
@@ -23,17 +22,17 @@ describe('OAuth2 middleware', () => {
 
   });
 
-  it('should pass through whitelisted uris', async () => {
+  it('should pass through public URIs', async () => {
 
     const app = getApp();
-    await expectStatus(200, app, '/whitelist');
+    await expectStatus(200, app, '/public');
 
   });
 
-  it('should pass through whitelisted subpath', async () => {
+  it('should pass through public subpath', async () => {
 
     const app = getApp();
-    await expectStatus(200, app, '/whitelist/foo');
+    await expectStatus(200, app, '/public/foo');
 
   });
 
@@ -108,7 +107,7 @@ function getApp(client?: OAuth2Client) {
       clientId: 'foo',
       introspectionEndpoint: 'http://localhost:40666/introspect',
     }),
-    whitelist: ['/whitelist'],
+    publicPrefixes: ['/public'],
   };
 
   const oauth2mw = OAuth2Mw(options);

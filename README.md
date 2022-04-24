@@ -18,7 +18,7 @@ If the token was not valid, it will emit a 401 response.
 Installation
 ------------
 
-    npm install @curveball/oauth2 fetch-mw-oauth2@2
+    npm install @curveball/oauth2@0.3 fetch-mw-oauth2@2
 
 
 Getting started
@@ -39,7 +39,7 @@ const client = OAuth2Client({
 
 const app = new Application();
 app.use(oauth2({
-  whitelist: [
+  publicPrefixes: [
     '/health-check',
     '/login',
     '/register'
