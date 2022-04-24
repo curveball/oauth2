@@ -39,6 +39,10 @@ export default function(options: Options): Middleware {
 
   const publicPrefixes = options.publicPrefixes ?? options.whitelist ?? [];
 
+  if (options.whitelist) {
+    console.warn('[@curveball/oauth2] The "whitelist" option is deprecated. Use "publicPrefixes" instead.');
+  }
+
   return async (ctx, next) => {
 
     let authRequired = true;
