@@ -77,4 +77,13 @@ export class PrivilegeHelper {
 
   }
 
+  /**
+   * Updates the list of privileges.
+   *
+   * This is usually only done by a plugin / middleware.
+   */
+  setData(privileges: Record<string, string[]>) {
+    this.privileges = privileges;
+  }
+
 }

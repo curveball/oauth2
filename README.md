@@ -191,6 +191,55 @@ function myController(ctx: Context) {
 }
 ```
 
+Providing your own privileges
+-----------------------------
+
+If you are not using [a12n-server][3], or a server that is compatible
+with its privilege system, you can also write your own middleware
+for providing privilege information.
+
+The easiest is to add your middleware after the oauth2 middleware
+and set it up as such:
+
+```typescript
+
+const app = new Application();
+
+// OAuth2 middleware
+app.use( oauth2({
+  /* ... */
+});
+
+
+
+/**
+ * Real applications probably store this in a database.
+ */
+const privilegeTable = {
+  // A regular user
+  'https://my-auth/user/1': {
+    'https://my-api/article/1': ['read', 'write']
+    'https://my-api/article/2': ['write']
+  }
+  // An admin user
+  'https://my-auth/user/2': {
+    '*': ['*']
+  }
+};
+
+
+// Providing your own privileges
+app.use((ctx, next) => {
+
+  if (ctx.auth.isLoggedIn()) {
+    if (ctx.auth.principal.id in privilegesTable) {
+      ctx.privileges.setData(privilegesTable[ctx.auth.principal.id]);
+    }
+  }
+  return next();
+
+});
+```
 
 [1]: https://tools.ietf.org/html/rfc7662
 [2]: https://github.com/evert/fetch-mw-oauth2
