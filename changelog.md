@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.3.2 (2022-04-10) - alpha
+--------------------------
+
+* Fix a bug in loading new Curveball context definitions.
+
 
 0.3.1 (2022-04-10) ALPHA!
 -------------------------
