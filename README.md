@@ -9,10 +9,14 @@ bearer tokens.
 
 When the middleware receives a Bearer token, it will ask an existing
 [OAuth2 introspection endpoint][1] if the token was valid, and if it was,
-it will put all the information the introspection endpoint returned in
-`ctx.state.oauth2`.
+it process the returned information.
 
-If the token was not valid, it will emit a 401 response.
+After this process, the following new properties will be available in your
+`Context`:
+
+* `ct.auth` -> An object that returns information about the authenticated user.
+* `ctx.privileges` -> An object that lets you ask if a user has certain privileges.
+* `ctx.state.oauth2` -> The raw OAuth2 introspection result.
 
 
 Installation
@@ -21,11 +25,15 @@ Installation
     npm install @curveball/oauth2@0.3 fetch-mw-oauth2@2
 
 
-Getting started
----------------
+The setup
+---------
 
-To use this middleware, you must first configure the oauth2 client and then
-add the middleware to your application.
+To use this middleware, have a working OAuth2 authorization server. The
+Curveball project [has one][3], but you can supply your own as long as it
+supports [token introspection][1].
+
+After you obtained your OAuth2 `clientId`, you can add this middleware:
+
 
 ```typescript
 import { Application } from '@curveball/core';
@@ -69,5 +77,121 @@ const client = OAuth2Client({
 });
 ```
 
+That's it! Now your endpoints are secured.
+
+
+Getting information about the logged in user
+--------------------------------------------
+
+If you are writing an endpoint, and you want to know who is logged in, you
+can now use the auth helper:
+
+```typescript
+function myController(ctx: Context) {
+
+  /**
+   * Returns true if the user is logged in
+   */
+  ctx.auth.isLoggedIn();
+
+  /**
+   * Returns information about the user.
+   *
+   * Return properties:
+   *   id - Unique machine-readable id. Taken from the 'sub' from introspection.
+   *        a12nserver will return a User url here.
+   *   displayName - A human-readable username
+   */
+  console.log(
+    ctx.auth.principal
+  );
+
+}
+```
+
+Privilege system
+----------------
+
+This package also provides an API for managing user privileges (Access Control
+Rules). If the OAuth2 introspection endpoint returned a list of privileges,
+this will be automatically used. [a12n-server][3] supports this.
+
+The general structure of privileges is like this:
+
+```typescript
+const privileges = {
+  'https://my-api/article/1': ['read', 'write']
+  'https://my-api/article/2': ['read', 'write']
+}
+```
+
+At the top level is a list of resources a user has acccess to, and at the
+second level a list of privileges. For example:
+
+The resource (like `https://my-api/article/1`) can be any URI and doesn't
+have to exist, as long as it's a good identifier for the resource.
+
+Both the resource and the privilege names may be `*`, which means 'all'.
+
+Given that the resources are URIs, it's possible to omit part of the URI.
+
+So given if a user is accessing `https://my-api/article/1` the following
+3 calls are equivalent:
+
+```typescript
+ctx.privileges.has('read', 'http://my-api/article/1');
+ctx.privileges.has('read', '/article/1');
+ctx.privileges.has('read');
+```
+
+### Other examples:
+
+
+```typescript
+function myController(ctx: Context) {
+
+  /**
+   * Returns true if a user had a privilege
+   */
+  ctx.privileges.has('read');
+
+  /**
+   * Throws a 403 Forbidden if a user did not have a privilege.
+   */
+  ctx.privileges.require('write');
+
+  /**
+   * Return the full privilege list for the current resource.
+   */
+  console.log(ctx.privileges.get());
+
+}
+```
+
+Similar examples, but now with a `resource` specified:
+
+```typescript
+function myController(ctx: Context) {
+
+  /**
+   * Returns true if a user had a privilege
+   */
+  ctx.privileges.has('read', 'http://my-other-api.example/foo');
+
+  /**
+   * Throws a 403 Forbidden if a user did not have a privilege.
+   */
+  ctx.privileges.require('write', 'http://articles.example/article/1');
+
+  /**
+   * Return the full privilege list for a resource.
+   */
+  console.log(ctx.privileges.get('http://api-example/groups/123'));
+
+}
+```
+
+
 [1]: https://tools.ietf.org/html/rfc7662
 [2]: https://github.com/evert/fetch-mw-oauth2
+[3]: https://github.com/curveball/a12n-server "a12n-server"
