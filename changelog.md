@@ -1,6 +1,21 @@
 Changelog
 =========
 
+
+0.3.1 (2022-04-10) ALPHA!
+-------------------------
+
+* Requires Node 18.
+* Renamed the `whitelist` setting to `publicPrefixes`.
+* Added `ctx.auth.isLoggedIn()`, `ctx.auth.principal`.
+* Can now provide information about the privileges a user has, either by
+  using the data from @curveball/a12n-server, or by providing your own.
+  Using this is optional, but it's there if you need it.
+* Added `ctx.privileges.has()`, `ctx.privileges.require()`,
+  `ctx.privileges.get()`.
+
+
+
 0.3.0 (2022-04-10) ALPHA!
 -------------------------
 
