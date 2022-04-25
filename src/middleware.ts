@@ -84,7 +84,7 @@ export default function(options: Options): Middleware {
     let authHelper: AuthHelper;
     let privilegeHelper: PrivilegeHelper;
 
-    const publicUrl: string = ctx.absoluteUrl();
+    const publicUrl: string = ctx.absoluteUrl;
 
     if (introspectResult) {
       if (!introspectResult.active) {
@@ -93,7 +93,7 @@ export default function(options: Options): Middleware {
       ctx.state.oauth2 = introspectResult;
       privilegeHelper = new PrivilegeHelper((introspectResult as any).privileges || {}, publicUrl);
       authHelper = new AuthHelper({
-        href: introspectResult.sub!,
+        id: introspectResult.sub!,
         displayName: introspectResult.username!,
         scope: introspectResult.scope?.split(' ') ?? [],
       });
