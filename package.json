@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@curveball/http-errors": "^0.4.0",
-    "fetch-mw-oauth2": "^2.0.1",
+    "fetch-mw-oauth2": "^2.0.11",
     "node-fetch": "^2.6.7"
   },
   "engines": {
