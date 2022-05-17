@@ -72,7 +72,10 @@
     "@curveball/core": ">=0.19 <1"
   },
   "mocha": {
-    "require": "ts-node/register",
+    "require": [
+      "ts-node/register",
+      "./test/polyfills.js"
+    ]
     "recursive": true,
     "extension": [
       "ts",
