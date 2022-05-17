@@ -25,6 +25,26 @@ Installation
     npm install @curveball/oauth2@0.3 fetch-mw-oauth2@2
 
 
+Compatibility
+-------------
+
+This package works on Node 18 and up. If you are using Node 16, you can use
+this package as long as you provide a polyfill for 'fetch'.
+
+Example:
+
+```javascript
+// For Node 16.x and below
+if (!global.fetch) {
+  const nodeFetch = require('node-fetch');
+  global.fetch = nodeFetch;
+  global.Headers = nodeFetch.Headers;
+  global.Request = nodeFetch.Request;
+  global.Response = nodeFetch.Response;
+}
+```
+
+
 The setup
 ---------
 
