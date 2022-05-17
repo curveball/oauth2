@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.3.3 (2022-05-17) - alpha
+--------------------------
+
+* Provide compatibility with a12n-server that uses `admin` as a catch-all
+  privilege.
+* Compatibility with Node 16.
+
+
 0.3.2 (2022-04-10) - alpha
 --------------------------
 

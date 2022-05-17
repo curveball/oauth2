@@ -47,7 +47,7 @@ export class PrivilegeHelper {
   has(privilege: string, resource?: string): boolean {
 
     const privileges = this.get(resource);
-    return privileges.includes(privilege) || privilege.includes('*');
+    return privileges.includes(privilege) || privilege.includes('*') || privilege.includes('admin');
 
   }
 
@@ -72,6 +72,7 @@ export class PrivilegeHelper {
 
     return [
       ...(this.privileges[realResource] ?? []),
+      ...(this.privileges['*'] ?? []),
       ...(this.privileges['*'] ?? []),
     ];
 

@@ -1,6 +1,6 @@
 {
   "name": "@curveball/oauth2",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "OAuth2 Middleware that validates Bearer tokens against a OAuth2 Introspection Endpoint.",
   "main": "dist/index.js",
   "scripts": {
@@ -63,16 +63,19 @@
   },
   "dependencies": {
     "@curveball/http-errors": "^0.4.0",
-    "fetch-mw-oauth2": "^2.0.1"
+    "fetch-mw-oauth2": "^2.0.11",
+    "node-fetch": "^2.6.7"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   },
   "peerDependencies": {
     "@curveball/core": ">=0.19 <1"
   },
   "mocha": {
-    "require": "ts-node/register",
+    "require": [
+      "ts-node/register"
+    ],
     "recursive": true,
     "extension": [
       "ts",
