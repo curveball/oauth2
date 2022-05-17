@@ -6,7 +6,7 @@ Changelog
 
 * Provide compatibility with a12n-server that uses `admin` as a catch-all
   privilege.
-* Compatibility Node 16.
+* Compatibility with Node 16.
 
 
 0.3.2 (2022-04-10) - alpha
