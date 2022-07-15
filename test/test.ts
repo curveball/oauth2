@@ -2,7 +2,7 @@ import OAuth2Mw from '../src';
 import { expect } from 'chai';
 import { Application, Context } from '@curveball/core';
 import * as http from 'http';
-import { OAuth2Client } from 'fetch-mw-oauth2';
+import { OAuth2Client } from '@badgateway/oauth2-client';
 
 describe('OAuth2 middleware', () => {
 
