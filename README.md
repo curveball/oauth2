@@ -19,7 +19,7 @@ After this process, the following new properties will be available in your
 Installation
 ------------
 
-    npm install @curveball/oauth2@0.3 fetch-mw-oauth2@2
+    npm install @curveball/oauth2 badgateway/oauth2-client
 
 
 The setup
@@ -35,7 +35,7 @@ After you obtained your OAuth2 `clientId`, you can add this middleware:
 ```typescript
 import { Application } from '@curveball/core';
 import oauth2 from '@curveball/oauth2';
-import { OAuth2Client } from 'fetch-mw-oauth2';
+import { OAuth2Client } from '@badgateway/oauth2-client';
 
 const client = OAuth2Client({
   clientId: 'My-app',
@@ -239,5 +239,5 @@ app.use((ctx, next) => {
 ```
 
 [1]: https://tools.ietf.org/html/rfc7662
-[2]: https://github.com/evert/fetch-mw-oauth2
+[2]: https://github.com/badgatway/oauth2-client "OAuth2 Client Library"
 [3]: https://github.com/curveball/a12n-server "a12n-server"
