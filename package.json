@@ -43,15 +43,15 @@
     "@curveball/core": "^0.19.0",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^9.1.0",
-    "@types/node": "^17.0.26",
+    "@types/node": "^14.18.22",
     "@types/sinon": "^10.0.11",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "chai": "^4.2.0",
     "eslint": "^8.11.0",
-    "mocha": "^9.2.2",
+    "mocha": "^10.0.0",
     "nyc": "^15.0.1",
-    "sinon": "^13.0.1",
+    "sinon": "^14.0.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.2.3"
   },
@@ -62,8 +62,8 @@
     ]
   },
   "dependencies": {
+    "@badgateway/oauth2-client": "^2.0.15",
     "@curveball/http-errors": "^0.4.0",
-    "fetch-mw-oauth2": "^2.0.11",
     "node-fetch": "^2.6.7"
   },
   "engines": {

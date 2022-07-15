@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.3.4 (2022-07-14)
+------------------
+
+* Stable release!
+* Switched to `@badgateway/oauth2-client` from `fetch-mw-oauth2`.
+
+
 0.3.3 (2022-05-17) - alpha
 --------------------------
 
