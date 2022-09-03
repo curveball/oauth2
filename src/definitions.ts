@@ -1,4 +1,4 @@
-import '@curveball/core';
+import '@curveball/kernel';
 
 import { AuthHelper } from './auth-helper';
 import { PrivilegeHelper } from './privilege-helper';

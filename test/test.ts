@@ -1,6 +1,6 @@
 import OAuth2Mw from '../src';
 import { expect } from 'chai';
-import { Application, Context } from '@curveball/core';
+import { Application, Context } from '@curveball/kernel';
 import * as http from 'http';
 import { OAuth2Client } from 'fetch-mw-oauth2';
 
