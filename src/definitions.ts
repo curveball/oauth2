@@ -3,7 +3,7 @@ import '@curveball/core';
 import { AuthHelper } from './auth-helper';
 import { PrivilegeHelper } from './privilege-helper';
 
-declare module '@curveball/core' {
+declare module '@curveball/kernel' {
 
   interface Context {
 
