@@ -1,6 +1,6 @@
 {
   "name": "@curveball/oauth2",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "OAuth2 Middleware that validates Bearer tokens against a OAuth2 Introspection Endpoint.",
   "main": "dist/index.js",
   "scripts": {
@@ -40,19 +40,19 @@
   },
   "homepage": "https://github.com/curveball/oauth2#readme",
   "devDependencies": {
-    "@curveball/core": "^0.19.0",
+    "@curveball/kernel": "^0.20.0",
     "@types/chai": "^4.2.11",
-    "@types/mocha": "^9.1.0",
-    "@types/node": "^14.18.22",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^14.18.26",
     "@types/sinon": "^10.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.16.0",
-    "@typescript-eslint/parser": "^5.16.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "chai": "^4.2.0",
-    "eslint": "^8.11.0",
+    "eslint": "^8.23.0",
     "mocha": "^10.0.0",
     "nyc": "^15.0.1",
     "sinon": "^14.0.0",
-    "ts-node": "^10.7.0",
+    "ts-node": "^10.9.1",
     "typescript": "^4.2.3"
   },
   "types": "dist/",
@@ -69,9 +69,6 @@
   "engines": {
     "node": ">=16"
   },
-  "peerDependencies": {
-    "@curveball/core": ">=0.19 <1"
-  },
   "mocha": {
     "require": [
       "ts-node/register"
@@ -82,5 +79,8 @@
       "js",
       "tsx"
     ]
+  },
+  "peerDependencies": {
+    "@curveball/kernel": ">=0.20.0 <1"
   }
 }
