@@ -1,6 +1,6 @@
 import { Middleware } from '@curveball/kernel';
 import { Unauthorized } from '@curveball/http-errors';
-import { OAuth2Client } from 'fetch-mw-oauth2';
+import { OAuth2Client } from '@badgateway/oauth2-client';
 import { AuthHelper } from './auth-helper';
 import { PrivilegeHelper } from './privilege-helper';
 
