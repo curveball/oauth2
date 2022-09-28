@@ -13,7 +13,7 @@ type Options = {
    * to authenticate and more.
    */
   client: OAuth2Client;
-
+  shouldIntrospect: boolean;
   /**
    * A list of paths that will not be checked for authentication.
    *
@@ -71,14 +71,14 @@ export default function(options: Options): Middleware {
       } else {
 
         const bearerToken = authParts[1];
-        introspectResult = await options.client.introspect({
-          accessToken: bearerToken,
-          expiresAt: null,
-          refreshToken: null,
-        });
-
+        if (options.shouldIntrospect) {
+          introspectResult = await options.client.introspect({
+            accessToken: bearerToken,
+            expiresAt: null,
+            refreshToken: null,
+          });
+        }
       }
-
     }
 
     let authHelper: AuthHelper;
