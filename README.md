@@ -19,7 +19,7 @@ After this process, the following new properties will be available in your
 Installation
 ------------
 
-    npm install @curveball/oauth2 badgateway/oauth2-client
+    $ npm install @curveball/oauth2 @badgateway/oauth2-client
 
 
 The setup
@@ -37,7 +37,7 @@ import { Application } from '@curveball/core';
 import oauth2 from '@curveball/oauth2';
 import { OAuth2Client } from '@badgateway/oauth2-client';
 
-const client = OAuth2Client({
+const client = new OAuth2Client({
   clientId: 'My-app',
   introspectionEndpoint: 'https://my-oauth2-server.example.org/introspect',
 });
