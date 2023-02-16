@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@badgateway/oauth2-client": "^2.0.15",
-    "@curveball/http-errors": "^0.4.0",
+    "@curveball/http-errors": "^0.5.0",
     "node-fetch": "^2.6.7"
   },
   "peerDependencies": {
