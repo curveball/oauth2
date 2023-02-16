@@ -1,9 +1,9 @@
 /* eslint "@typescript-eslint/no-var-requires": 0 */
 
-import './definitions';
-export { default as default } from './middleware';
-export { AuthHelper, Principal } from './auth-helper';
-export { PrivilegeHelper } from './privilege-helper';
+import './definitions.js';
+export { default as default } from './middleware.js';
+export { AuthHelper, Principal } from './auth-helper.js';
+export { PrivilegeHelper } from './privilege-helper.js';
 
 if (!global.fetch) {
   const nodeFetch = require('node-fetch');
