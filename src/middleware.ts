@@ -1,8 +1,8 @@
 import { Middleware } from '@curveball/kernel';
 import { Unauthorized } from '@curveball/http-errors';
 import { OAuth2Client } from '@badgateway/oauth2-client';
-import { AuthHelper } from './auth-helper';
-import { PrivilegeHelper } from './privilege-helper';
+import { AuthHelper } from './auth-helper.js';
+import { PrivilegeHelper } from './privilege-helper.js';
 
 type Options = {
 

@@ -1,7 +1,7 @@
-import OAuth2Mw from '../src';
+import OAuth2Mw from '../src/index.js';
 import { expect } from 'chai';
 import { Application, Context } from '@curveball/kernel';
-import * as http from 'http';
+import * as http from 'node:http';
 import { OAuth2Client } from '@badgateway/oauth2-client';
 
 describe('OAuth2 middleware', () => {
