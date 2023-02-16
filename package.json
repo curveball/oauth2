@@ -1,6 +1,6 @@
 {
   "name": "@curveball/oauth2",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "OAuth2 Middleware that validates Bearer tokens against a OAuth2 Introspection Endpoint.",
   "type": "module",
   "exports": {
