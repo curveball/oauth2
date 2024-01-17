@@ -159,14 +159,14 @@ function startServer() {
           return;
         }
 
-
+        console.log(body);
         switch(body) {
-          case 'token=correct&token_type_hint=access_token':
+          case 'token=correct&token_type_hint=access_token&client_id=foo':
             result = {
               active: true
             };
             break;
-          case 'token=error&token_type_hint=access_token' :
+          case 'token=error&token_type_hint=access_token&client_id=foo' :
             result = {};
             res.statusCode = 404;
             break;

@@ -10,6 +10,8 @@ Changelog
   ESM is the future, so we're dropping CommonJS.
 * Now requires Node 18.
 * Upgraded to Typescript 5.3.
+* Removed node-fetch. All versions of Node supported by this library have a
+  built-in fetch now
 
 
 0.5.0 (2023-02-16)
