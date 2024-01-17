@@ -3,11 +3,7 @@
   "version": "0.5.0",
   "description": "OAuth2 Middleware that validates Bearer tokens against a OAuth2 Introspection Endpoint.",
   "type": "module",
-  "exports": {
-    "require": "./cjs/index.js",
-    "import": "./esm/index.js"
-  },
-  "main": "cjs/index.js",
+  "exports": "./dist/index.js",
   "homepage": "https://github.com/curveball/oauth2#readme",
   "bugs": {
     "url": "https://github.com/curveball/oauth2/issues"
@@ -33,7 +29,8 @@
     "lint": "make lint",
     "fix": "make fix",
     "tsc": "tsc",
-    "start": "make start"
+    "start": "make start",
+    "build": "make build"
   },
   "repository": {
     "type": "git",
@@ -46,32 +43,31 @@
     "node-fetch": "^2.6.7"
   },
   "peerDependencies": {
-    "@curveball/kernel": ">=0.21.0 <1"
+    "@curveball/kernel": "^1"
   },
   "devDependencies": {
-    "@curveball/kernel": "^0.21.0",
+    "@curveball/kernel": "^1.0.0",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^16.18.12",
-    "@types/sinon": "^10.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.36.1",
-    "chai": "^4.2.0",
+    "@types/node": "^18.19.8",
+    "@types/sinon": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "chai": "^5.0.0",
     "eslint": "^8.23.0",
     "mocha": "^10.2.0",
     "nyc": "^15.0.1",
-    "sinon": "^15.0.1",
+    "sinon": "^17.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.2.3"
+    "typescript": "^5.3.3"
   },
   "engines": {
-    "node": ">= 16"
+    "node": ">= 18"
   },
   "files": [
     "package.json",
     "README.md",
-    "esm",
-    "cjs",
+    "dist",
     "LICENSE",
     "src"
   ],
