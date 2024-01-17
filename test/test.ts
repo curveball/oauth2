@@ -159,7 +159,6 @@ function startServer() {
           return;
         }
 
-        console.log(body);
         switch(body) {
           case 'token=correct&token_type_hint=access_token&client_id=foo':
             result = {
