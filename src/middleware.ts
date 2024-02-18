@@ -1,5 +1,5 @@
 import { Middleware } from '@curveball/kernel';
-import { Unauthorized } from '@curveball/http-errors';
+import { BadGateway, Unauthorized } from '@curveball/http-errors';
 import { OAuth2Client } from '@badgateway/oauth2-client';
 import { AuthHelper } from './auth-helper.js';
 import { PrivilegeHelper } from './privilege-helper.js';
@@ -71,11 +71,18 @@ export default function(options: Options): Middleware {
       } else {
 
         const bearerToken = authParts[1];
-        introspectResult = await options.client.introspect({
-          accessToken: bearerToken,
-          expiresAt: null,
-          refreshToken: null,
-        });
+
+        try {
+          introspectResult = await options.client.introspect({
+            accessToken: bearerToken,
+            expiresAt: null,
+            refreshToken: null,
+          });
+        } catch (err: any) {
+          console.error('[OAUTH2] Unexpected error while trying to validate OAuth2 token with remote server');
+          console.error(err);
+          throw new BadGateway('Error while trying to communicate with upstream server');
+        }
 
       }
 

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.1 (????-??-??)
+------------------
+
+* Emit 502 error when an issue occurs with reaching oauth2 server.
+
+
 1.0.0 (2024-01-17)
 ------------------
 
