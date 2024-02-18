@@ -74,7 +74,7 @@ describe('OAuth2 middleware', () => {
   it('should emit a 500 when an error occured while accessing the introspection server', async () => {
 
     const app = getApp();
-    await expectStatus(500, app, '/', 'Bearer error');
+    await expectStatus(502, app, '/', 'Bearer error');
 
   });
 
