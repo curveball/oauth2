@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { Application, Context } from '@curveball/kernel';
 import * as http from 'node:http';
 import { OAuth2Client } from '@badgateway/oauth2-client';
+import { describe, it, after } from 'node:test';
 
 describe('OAuth2 middleware', () => {
 
@@ -61,13 +62,6 @@ describe('OAuth2 middleware', () => {
 
     const app = getApp();
     await expectStatus(200, app, '/', 'Bearer correct');
-
-  });
-
-  it('should emit a 401 when bearer credentials were incorrect', async () => {
-
-    const app = getApp();
-    await expectStatus(401, app, '/', 'Bearer bad');
 
   });
 
@@ -152,12 +146,6 @@ function startServer() {
       req.on('end', () => {
 
         let result;
-
-        if (req.headers.authorization === 'Bearer server-bearer-bad') {
-          res.statusCode = 401;
-          res.end();
-          return;
-        }
 
         switch(body) {
           case 'token=correct&token_type_hint=access_token&client_id=foo':

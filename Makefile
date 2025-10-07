@@ -1,4 +1,5 @@
 SOURCE_FILES:=$(shell find src/ -type f -name '*.ts')
+TEST_FILES:=$(shell find test/ -type f -name '*.ts')
 
 .PHONY:all
 all: build
@@ -8,7 +9,7 @@ build: dist/build
 
 .PHONY:test
 test:
-	npx nyc mocha
+	npx tsx --test ${TEST_FILES}
 
 .PHONY:lint
 lint:
