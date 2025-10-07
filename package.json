@@ -37,7 +37,7 @@
     "url": "git+https://github.com/curveball/oauth2.git"
   },
   "dependencies": {
-    "@badgateway/oauth2-client": "^2.0.15",
+    "@badgateway/oauth2-client": "^3.3.1",
     "@curveball/http-errors": "^1.0.0"
   },
   "peerDependencies": {
@@ -45,19 +45,15 @@
   },
   "devDependencies": {
     "@curveball/kernel": "^1.0.0",
-    "@types/chai": "^4.2.11",
-    "@types/mocha": "^10.0.1",
+    "@eslint/js": "^9.37.0",
+    "@types/chai": "^5.2.2",
     "@types/node": "^18.19.8",
-    "@types/sinon": "^17.0.3",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "chai": "^5.0.0",
-    "eslint": "^8.23.0",
-    "mocha": "^10.2.0",
-    "nyc": "^15.0.1",
-    "sinon": "^17.0.1",
+    "chai": "^6.2.0",
+    "nyc": "^17.1.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.3.3"
+    "tsx": "^4.20.6",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.46.0"
   },
   "engines": {
     "node": ">= 18"

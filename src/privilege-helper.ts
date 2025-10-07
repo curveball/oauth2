@@ -47,7 +47,15 @@ export class PrivilegeHelper {
   has(privilege: string, resource?: string): boolean {
 
     const privileges = this.get(resource);
-    return privileges.includes(privilege) || privilege.includes('*') || privilege.includes('admin');
+    return (
+      // Exact match
+      privileges.includes(privilege) ||
+      // Wildcard for 'all privileges'.
+      privileges.includes('*') ||
+      // 'Admin' privilege grants all other privileges. This will be deprecated
+      // at some point.
+      privileges.includes('admin')
+    );
 
   }
 
